@@ -1,0 +1,65 @@
+/*
+ * Hyperledger Fabric Chaincode Build Configuration
+ * This chaincode handles decentralized identity management operations
+ */
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.did.chaincode'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+dependencies {
+    // Hyperledger Fabric Chaincode Shim - Core library for chaincode development
+    implementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'
+    
+    // JSON processing for serializing/deserializing identity and credential data
+    implementation 'com.google.code.gson:gson:2.10.1'
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+shadowJar {
+    archiveBaseName.set('chaincode')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    manifest {
+        attributes 'Main-Class': 'org.hyperledger.fabric.contract.ContractRouter'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// Task to package chaincode for deployment
+task packageChaincode(type: Copy, dependsOn: shadowJar) {
+    from shadowJar.archiveFile
+    into "${buildDir}/chaincode"
+}
+
+// Configure wrapper to use Gradle 8.10.2 (compatible with Shadow plugin)
+wrapper {
+    gradleVersion = '8.10.2'
+}

@@ -1,0 +1,139 @@
+# =============================================================
+# DID System - .gitignore
+# =============================================================
+
+# ----------------------------
+# Documentation (excluded)
+# ----------------------------
+docs/
+
+# ----------------------------
+# Fabric Network Generated Files
+# ----------------------------
+network/bin/
+network/config/
+network/builders/
+network/crypto-config/
+network/channel-artifacts/
+network/organizations/
+network/system-genesis-block/
+
+# Chaincode packages
+network/*.tar.gz
+network/identity-chaincode-ccaas.tar.gz
+
+# ----------------------------
+# Chaincode Build Artifacts
+# ----------------------------
+chaincode/identity-chaincode/build/
+chaincode/identity-chaincode/.gradle/
+chaincode/identity-chaincode/bin/
+
+# CCaaS package generated files
+chaincode/identity-chaincode/ccaas-pkg/code.tar.gz
+chaincode/identity-chaincode/ccaas-pkg/*.tar.gz
+
+# ----------------------------
+# Gradle
+# ----------------------------
+.gradle/
+**/build/
+!src/**/build/
+
+# Gradle wrapper (optional - can be committed for reproducibility)
+# Uncomment if you want to exclude
+# gradle/wrapper/gradle-wrapper.jar
+# gradlew
+# gradlew.bat
+
+# ----------------------------
+# Java
+# ----------------------------
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# ----------------------------
+# IDE - IntelliJ IDEA
+# ----------------------------
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ----------------------------
+# IDE - Eclipse
+# ----------------------------
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath
+
+# ----------------------------
+# IDE - VS Code
+# ----------------------------
+.vscode/
+*.code-workspace
+
+# ----------------------------
+# IDE - NetBeans
+# ----------------------------
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# ----------------------------
+# macOS
+# ----------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ----------------------------
+# Windows
+# ----------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ----------------------------
+# Linux
+# ----------------------------
+*~
+
+# ----------------------------
+# Docker
+# ----------------------------
+docker-compose.override.yml
+
+# ----------------------------
+# Logs
+# ----------------------------
+*.log
+logs/
+
+# ----------------------------
+# Temporary files
+# ----------------------------
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ----------------------------
+# Environment files
+# ----------------------------
+.env
+.env.local
+.env.*.local
