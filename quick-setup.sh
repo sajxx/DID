@@ -45,11 +45,22 @@ echo ""
 # ----------------------------
 # Sanity check: run from root
 # ----------------------------
-if [ ! -d "network" ] || [ ! -d "chaincode" ]; then
-    print_error "Please run this script from the project root directory"
-    print_error "Current directory: $(pwd)"
-    print_error "Expected directories: network/, chaincode/"
+if [ ! -d "chaincode" ]; then
+    print_error "Directory 'chaincode' not found."
+    print_error "Please ensure that chaincode directory containing the gradle build as well as the source code for the blockchain chaincode exists."
     exit 1
+fi
+
+if [ ! -d "network" ]; then
+    print_step "'network' directory not found. Create it? (y/n)"
+    read -r CREATE_NETWORK_DIR
+    if [[ "$CREATE_NETWORK_DIR" =~ ^[Yy]$ ]]; then
+        mkdir -p "network"
+        print_success "Created 'network' directory."
+    else
+        print_error "Directory 'network' is required. Exiting."
+        exit 1
+    fi
 fi
 
 # ----------------------------
