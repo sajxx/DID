@@ -1,0 +1,16 @@
+# Fabric binaries (downloaded at runtime)
+bin/
+config/
+builders/
+
+# Generated crypto materials
+crypto-config/
+
+# Generated channel artifacts
+channel-artifacts/
+
+# Chaincode packages
+*.tar.gz
+
+# Docker volumes data
+data/

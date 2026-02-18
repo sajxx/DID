@@ -1,0 +1,47 @@
+# Hyperledger Fabric Crypto Material Configuration
+# Used by cryptogen tool to generate certificates
+
+# ============================================================
+# OrdererOrgs - Orderer Organizations
+# ============================================================
+OrdererOrgs:
+  - Name: Orderer
+    Domain: did.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+        SANS:
+          - localhost
+          - 127.0.0.1
+
+# ============================================================
+# PeerOrgs - Peer Organizations
+# ============================================================
+PeerOrgs:
+  # ----------------------------------------------------------
+  # Org1: Identity Issuers (Government, Universities, etc.)
+  # ----------------------------------------------------------
+  - Name: Org1
+    Domain: org1.did.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+        - 127.0.0.1
+    Users:
+      Count: 1
+
+  # ----------------------------------------------------------
+  # Org2: Verifiers (Employers, Service Providers, etc.)
+  # ----------------------------------------------------------
+  - Name: Org2
+    Domain: org2.did.com
+    EnableNodeOUs: true
+    Template:
+      Count: 1
+      SANS:
+        - localhost
+        - 127.0.0.1
+    Users:
+      Count: 1

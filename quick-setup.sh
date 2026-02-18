@@ -35,6 +35,7 @@ CC_SEQUENCE="1"
 
 PROJECT_ROOT="$(pwd)"
 NETWORK_DIR="${PROJECT_ROOT}/network"
+CONFIG_DIR="${PROJECT_ROOT}/network-config"
 CHAINCODE_DIR="${PROJECT_ROOT}/chaincode/identity-chaincode"
 
 echo "============================================================"
@@ -47,20 +48,20 @@ echo ""
 # ----------------------------
 if [ ! -d "chaincode" ]; then
     print_error "Directory 'chaincode' not found."
-    print_error "Please ensure that chaincode directory containing the gradle build as well as the source code for the blockchain chaincode exists."
+    print_error "Please run this script from the project root directory."
+    exit 1
+fi
+
+if [ ! -d "network-config" ]; then
+    print_error "Directory 'network-config' not found."
+    print_error "This folder should contain: crypto-config.yaml, configtx.yaml, docker-compose.yml"
     exit 1
 fi
 
 if [ ! -d "network" ]; then
-    print_step "'network' directory not found. Create it? (y/n)"
-    read -r CREATE_NETWORK_DIR
-    if [[ "$CREATE_NETWORK_DIR" =~ ^[Yy]$ ]]; then
-        mkdir -p "network"
-        print_success "Created 'network' directory."
-    else
-        print_error "Directory 'network' is required. Exiting."
-        exit 1
-    fi
+    print_step "'network' directory not found. Creating it..."
+    mkdir -p "network"
+    print_success "Created 'network' directory."
 fi
 
 # ----------------------------
@@ -137,6 +138,14 @@ fi
 print_step "Cleaning up old artifacts..."
 sudo rm -rf crypto-config channel-artifacts organizations system-genesis-block 2>/dev/null || true
 mkdir -p channel-artifacts
+
+# Copy config files from network-config
+print_step "Copying configuration files from network-config/..."
+cp "${CONFIG_DIR}/crypto-config.yaml" .
+cp "${CONFIG_DIR}/configtx.yaml" .
+cp "${CONFIG_DIR}/docker-compose.yml" .
+cp "${CONFIG_DIR}/connection-org1.json" .
+print_success "Configuration files copied"
 
 # Generate crypto materials
 print_step "Generating cryptographic materials..."
